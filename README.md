@@ -3,10 +3,10 @@
 > P2P protocol for direct communication between personal AI agents
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![npm version](https://badge.fury.io/js/@dolutech/agent-link.svg)](https://badge.fury.io/js/@dolutech/agent-link)
+[![npm version](https://img.shields.io/npm/v/@dolutech/agent-link.svg)](https://www.npmjs.com/package/@dolutech/agent-link)
 [![Node.js Version](https://img.shields.io/node/v/@dolutech/agent-link.svg)](https://nodejs.org)
 
-**Status:** MVP Complete | Version: 0.1.0
+**Version:** 0.1.0 | [Website](https://agentlink.dolutech.com)
 
 ---
 
