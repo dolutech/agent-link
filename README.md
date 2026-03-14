@@ -6,7 +6,7 @@
 [![npm version](https://img.shields.io/npm/v/@dolutech/agent-link.svg)](https://www.npmjs.com/package/@dolutech/agent-link)
 [![Node.js Version](https://img.shields.io/node/v/@dolutech/agent-link.svg)](https://nodejs.org)
 
-**Version:** 0.1.0 | [Website](https://agentlink.dolutech.com)
+**Version:** 0.1.1 | [Website](https://agentlink.dolutech.com)
 
 ---
 

@@ -150,3 +150,6 @@ vitest.config.ts.timestamp-*/
 # ============================================
 deploy*.sh
 *.tgz
+
+# Docker test environment
+docker/
