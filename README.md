@@ -490,3 +490,39 @@ This project was inspired by:
 ---
 
 **"Building the communication infrastructure for the next generation of AI agents."**
+
+---
+
+## Network & Security
+
+### Default Port
+
+- **TCP:** `9100`
+- **UDP:** `9100` (QUIC)
+
+### Firewall Configuration
+
+```bash
+# Ubuntu/Debian (UFW)
+sudo ufw allow 9100/tcp
+sudo ufw allow 9100/udp
+
+# CentOS/RHEL (firewalld)
+sudo firewall-cmd --permanent --add-port=9100/tcp
+sudo firewall-cmd --permanent --add-port=9100/udp
+sudo firewall-cmd --reload
+```
+
+### Security Best Practices
+
+- ✅ Rate limiting enabled by default (100 msg/min)
+- ✅ Encrypted identity storage available
+- ✅ Trust levels for access control
+- ✅ Replay protection
+- ✅ Message signing (Ed25519)
+
+📖 **Full Guide:** [docs/NETWORK_SECURITY.md](docs/NETWORK_SECURITY.md)
+
+---
+
+**DoluTech © 2026**
