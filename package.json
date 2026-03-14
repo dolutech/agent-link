@@ -1,0 +1,84 @@
+{
+  "name": "@dolutech/agent-link",
+  "version": "0.1.0",
+  "description": "P2P protocol for direct communication between personal AI agents",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src --ext .ts",
+    "format": "prettier --write src/**/*.ts",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "dependencies": {
+    "@chainsafe/libp2p-quic": "^2.0.0",
+    "@chainsafe/libp2p-yamux": "^8.0.1",
+    "@libp2p/autonat": "^3.0.12",
+    "@libp2p/circuit-relay-v2": "^4.1.5",
+    "@libp2p/dcutr": "^3.0.12",
+    "@libp2p/identify": "^4.0.12",
+    "@libp2p/kad-dht": "^16.1.5",
+    "@libp2p/mdns": "^12.0.13",
+    "@libp2p/noise": "^12.0.1",
+    "@libp2p/peer-id": "^6.0.4",
+    "@libp2p/ping": "^3.0.12",
+    "@libp2p/tcp": "^11.0.12",
+    "@noble/curves": "^1.2.0",
+    "@noble/hashes": "^1.3.0",
+    "@types/lru-cache": "^7.10.9",
+    "it-length-prefixed": "^10.0.1",
+    "it-pipe": "^3.0.1",
+    "it-pushable": "^3.2.3",
+    "libp2p": "^3.1.5",
+    "lru-cache": "^11.2.7",
+    "multiformats": "^13.0.0",
+    "uint8arrays": "^5.0.0",
+    "ulid": "^2.3.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "@vitest/coverage-v8": "^1.2.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.0",
+    "typescript": "^5.9.3",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "p2p",
+    "agent",
+    "ai",
+    "libp2p",
+    "did",
+    "openclaw"
+  ],
+  "license": "MIT",
+  "author": "DoluTech",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolutech/agent-link"
+  },
+  "bugs": {
+    "url": "https://github.com/dolutech/agent-link/issues"
+  },
+  "homepage": "https://github.com/dolutech/agent-link#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

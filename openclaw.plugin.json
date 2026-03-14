@@ -1,0 +1,57 @@
+{
+  "id": "agentlink",
+  "name": "AgentLink Protocol",
+  "version": "0.1.0",
+  "description": "P2P protocol for direct communication between personal AI agents",
+  "main": "dist/index.js",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable AgentLink P2P networking"
+      },
+      "listenPort": {
+        "type": "number",
+        "default": 9100,
+        "description": "Port to listen for P2P connections"
+      },
+      "identity": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Human-readable name for this agent"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of this agent's purpose"
+          }
+        }
+      },
+      "discovery": {
+        "type": "object",
+        "properties": {
+          "mdns": {
+            "type": "boolean",
+            "default": true,
+            "description": "Enable mDNS discovery on local network"
+          }
+        }
+      },
+      "security": {
+        "type": "object",
+        "properties": {
+          "defaultTrust": {
+            "type": "string",
+            "enum": ["blocked", "unknown", "ask", "friend", "trusted"],
+            "default": "ask",
+            "description": "Default trust level for unknown agents"
+          }
+        }
+      }
+    },
+    "required": ["enabled"]
+  }
+}

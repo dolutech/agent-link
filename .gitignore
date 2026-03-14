@@ -1,0 +1,150 @@
+# ============================================
+# .gitignore - AgentLink Protocol
+# ============================================
+# Only core open source files should be committed
+# Documentation, site, npm/CLI are separate
+
+# ============================================
+# Dependencies
+# ============================================
+node_modules/
+npm/node_modules/
+
+# ============================================
+# Build Output (generated on build)
+# ============================================
+dist/
+npm/dist/
+
+# ============================================
+# Environment & Secrets
+# ============================================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+.env.test
+*.env
+
+# ============================================
+# Private Keys & Identity (NEVER COMMIT)
+# ============================================
+.agentlink/
+*.key
+*.enc
+*.pem
+*.crt
+*.private
+*.secret
+vault.enc
+identity.json
+identity.key
+
+# ============================================
+# Logs
+# ============================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+logs/
+
+# ============================================
+# OS Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================
+# IDE & Editor
+# ============================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# ============================================
+# Test & Coverage
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+
+# ============================================
+# Temporary Files
+# ============================================
+tmp/
+temp/
+*.tmp
+*.temp
+.cache/
+
+# ============================================
+# Documentation (separate repos)
+# ============================================
+docs/
+site/
+
+# ============================================
+# Skills (REQUIRED - OpenClaw agents need these)
+# ============================================
+# DO NOT EXCLUDE - skills/ MUST be committed
+# skills/ - INCLUDED in repository
+
+# ============================================
+# CLI Package (separate publish)
+# ============================================
+npm/
+
+# ============================================
+# Examples (optional demos)
+# ============================================
+examples/
+
+# ============================================
+# Build Artifacts
+# ============================================
+*.tgz
+*.tar.gz
+*.tar
+*.zip
+
+# ============================================
+# TypeScript
+# ============================================
+*.tsbuildinfo
+
+# ============================================
+# vitest
+# ============================================
+vitest.config.ts.timestamp-*/
+
+# ============================================
+# Package Manager
+# ============================================
+.npm/
+.lodash_cache/
+
+# ============================================
+# WHAT TO COMMIT:
+# ============================================
+# ✅ src/ - Source code
+# ✅ tests/ - Test files
+# ✅ package.json - Package manifest
+# ✅ package-lock.json - Locked dependencies
+# ✅ tsconfig.json - TypeScript config
+# ✅ README.md - Main documentation
+# ✅ LICENSE - License file
+# ✅ .gitignore - This file
+# ✅ vitest.config.ts - Test config
+# ============================================
