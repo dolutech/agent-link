@@ -4,13 +4,23 @@
   "description": "P2P protocol for direct communication between personal AI agents",
   "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
+  "files": [
+    "dist",
+    "src",
+    "skills",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
@@ -19,7 +29,8 @@
     "test:coverage": "vitest run --coverage",
     "lint": "eslint src --ext .ts",
     "format": "prettier --write src/**/*.ts",
-    "prepublishOnly": "npm run build && npm test"
+    "prepublishOnly": "npm run build && npm test",
+    "prepack": "npm run build"
   },
   "dependencies": {
     "@chainsafe/libp2p-quic": "^2.0.0",
@@ -57,28 +68,56 @@
     "typescript": "^5.9.3",
     "vitest": "^1.2.0"
   },
+  "peerDependencies": {},
   "engines": {
     "node": ">=20.0.0"
   },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
   "keywords": [
     "p2p",
+    "peer-to-peer",
     "agent",
     "ai",
+    "artificial-intelligence",
     "libp2p",
     "did",
-    "openclaw"
+    "decentralized-identity",
+    "messaging",
+    "communication",
+    "openclaw",
+    "dolutech"
   ],
   "license": "MIT",
-  "author": "DoluTech",
+  "author": {
+    "name": "DoluTech",
+    "email": "dolutech@proton.me",
+    "url": "https://github.com/dolutech"
+  },
+  "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/dolutech/agent-link"
+    "url": "git+https://github.com/dolutech/agent-link.git"
   },
   "bugs": {
-    "url": "https://github.com/dolutech/agent-link/issues"
+    "url": "https://github.com/dolutech/agent-link/issues",
+    "email": "security@dolutech.com"
   },
   "homepage": "https://github.com/dolutech/agent-link#readme",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/dolutech"
+  },
   "publishConfig": {
-    "access": "public"
-  }
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "sideEffects": false
 }
