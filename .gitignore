@@ -148,3 +148,5 @@ vitest.config.ts.timestamp-*/
 # ✅ .gitignore - This file
 # ✅ vitest.config.ts - Test config
 # ============================================
+deploy*.sh
+*.tgz
