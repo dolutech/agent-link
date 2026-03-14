@@ -129,7 +129,7 @@ export async function findClosestPeers(
  * @example
  * await bootstrapDHT(node, [
  *   '/ip4/1.2.3.4/tcp/9100/p2p/12D3KooWABC...',
- *   '/dns4/bootstrap.agentlink.io/tcp/9100/p2p/12D3KooWDEF...'
+ *   '/dns4/bootstrap.agentlink.dolutech.com/tcp/9100/p2p/12D3KooWDEF...'
  * ]);
  */
 export async function bootstrapDHT(

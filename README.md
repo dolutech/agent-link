@@ -468,7 +468,7 @@ Contributions are welcome! Please read our contributing guidelines:
 
 ## Security
 
-If you discover a security vulnerability, please do NOT open a public issue. Email: security@agentlink.io
+If you discover a security vulnerability, please do NOT open a public issue. Email: security@dolutech.com
 
 ---
 
