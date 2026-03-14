@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Primary Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="title" content="AgentLink Protocol — P2P Communication for AI Agents">
+    <meta name="description" content="AgentLink is a P2P protocol for direct communication between personal AI agents. Secure, decentralized, with self-sovereign identity. Built on libp2p.">
+    <meta name="keywords" content="P2P, peer-to-peer, AI agents, artificial intelligence, libp2p, DID, decentralized identity, messaging, OpenClaw, DoluTech, self-sovereign, encryption">
+    <meta name="author" content="DoluTech">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="English">
+    <meta name="theme-color" content="#00f0ff">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://agentlink.dolutech.com">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agentlink.dolutech.com">
+    <meta property="og:title" content="AgentLink Protocol — P2P for AI Agents">
+    <meta property="og:description" content="P2P protocol for direct communication between personal AI agents.">
+    <meta property="og:image" content="https://agentlink.dolutech.com/og-image.png">
+    <meta property="og:site_name" content="AgentLink Protocol">
+    
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://agentlink.dolutech.com">
+    <meta property="twitter:title" content="AgentLink Protocol — P2P for AI Agents">
+    <meta property="twitter:description" content="P2P protocol for direct communication between personal AI agents.">
+    <meta name="twitter:creator" content="@dolutech">
+    <title>AgentLink Protocol by DoluTech — P2P for AI Agents</title>
+    <meta name="keywords" content="P2P, AI agents, libp2p, DID, decentralized, OpenClaw, DoluTech">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ink: #0a0a0b;
+            --paper: #fafaf9;
+            --muted: #71717a;
+            --accent: #00f0ff;
+            --accent-dim: #00f0ff33;
+            --secondary: #ff3366;
+            --card: #18181b;
+            --border: #27272a;
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #0066ff 50%, #6633ff 100%);
+            --gradient-2: linear-gradient(135deg, #ff3366 0%, #ff6b35 100%);
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'IBM Plex Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--ink);
+            color: var(--paper);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(var(--accent) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 20px 0;
+            background: linear-gradient(to bottom, var(--ink) 0%, transparent 100%);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--paper);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-mark::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            background: var(--ink);
+            border-radius: 50%;
+        }
+
+        .logo-mark::after {
+            content: '';
+            position: absolute;
+            width: 30%;
+            height: 30%;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-cta {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 12px 24px;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent);
+            color: var(--ink);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-label::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 0.95;
+            margin-bottom: 32px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title span {
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 480px;
+            margin-bottom: 48px;
+            font-weight: 300;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 16px 32px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--ink);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-dim);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--paper);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--paper);
+        }
+
+        /* Network Canvas */
+        .network-canvas {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+
+        #networkViz {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node-label {
+            position: absolute;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 4px 8px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        /* Stats */
+        .stats {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* Sections */
+        .section {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            max-width: 800px;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 40px 32px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-dim);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--ink);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+        }
+
+        .feature-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        /* How it Works */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 100px 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .step-number {
+            font-family: var(--font-display);
+            font-size: 6rem;
+            font-weight: 800;
+            color: var(--card);
+            -webkit-text-stroke: 1px var(--border);
+            line-height: 1;
+        }
+
+        .step-content h3 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .step-content p {
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .step-code {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 24px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--muted);
+            overflow-x: auto;
+            line-height: 1.8;
+        }
+
+        .step-code .k { color: var(--accent); }
+        .step-code .s { color: var(--secondary); }
+        .step-code .c { color: #52525b; }
+
+        /* OpenClaw */
+        .openclaw-section {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.03) 0%, rgba(102, 51, 255, 0.03) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .openclaw-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .openclaw-badge {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 24px;
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid var(--secondary);
+        }
+
+        .openclaw-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .openclaw-desc {
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .compat-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .compat-item {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            padding: 8px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--paper);
+        }
+
+        .openclaw-visual {
+            text-align: center;
+        }
+
+        .openclaw-icon {
+            font-size: 8rem;
+            margin-bottom: 24px;
+            filter: grayscale(1);
+        }
+
+        .openclaw-visual p {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 160px 0;
+        }
+
+        .cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .cta-desc {
+            font-size: 1.25rem;
+            color: var(--muted);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 16px;
+            max-width: 300px;
+            line-height: 1.7;
+        }
+
+        .footer-title {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--paper);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 24px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .network-canvas {
+                height: 400px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .step {
+                grid-template-columns: 60px 1fr;
+            }
+
+            .step-code {
+                grid-column: span 2;
+            }
+
+            .openclaw-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .step-number {
+                font-size: 4rem;
+            }
+
+            .step-code {
+                grid-column: auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section {
+                padding: 80px 0;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+        }
+
+        /* Mobile Menu */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--ink);
+            z-index: 99;
+            padding: 100px 24px 40px;
+        }
+
+        .mobile-nav.active {
+            display: block;
+        }
+
+        .mobile-nav a {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--paper);
+            text-decoration: none;
+            margin-bottom: 24px;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-inner">
+                <a href="/" class="logo">
+                    <div class="logo-mark"></div>
+                    AgentLink
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how">How it Works</a></li>
+                    <li><a href="#openclaw">OpenClaw</a></li>
+                    <li><a href="docs.html">Docs</a></li>
+                </ul>
+                
+                <a href="#start" class="nav-cta">Get Started →</a>
+                
+                <button class="mobile-toggle" onclick="toggleNav()">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-close" onclick="toggleNav()">×</button>
+        <a href="#features" onclick="toggleNav()">Features</a>
+        <a href="#how" onclick="toggleNav()">How it Works</a>
+        <a href="#openclaw" onclick="toggleNav()">OpenClaw</a>
+        <a href="docs.html">Docs</a>
+        <a href="#start" onclick="toggleNav()">Get Started</a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-label">P2P Protocol for AI</div>
+                    <h1 class="hero-title">
+                        Agents talking<br>
+                        to <span>agents</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Direct communication between personal AI assistants. No servers. No intermediaries. 
+                        Your OpenClaw agent, connected to the world.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="docs.html" class="btn btn-primary">Read the Docs →</a>
+                        <a href="https://github.com/dolutech/agent-link" target="_blank" class="btn btn-ghost">GitHub</a>
+                    </div>
+                </div>
+                
+                <div class="network-canvas">
+                    <canvas id="networkViz"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">0</div>
+                    <div class="stat-label">Third-party servers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">E2E</div>
+                    <div class="stat-label">Encryption</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">176</div>
+                    <div class="stat-label">Tests passing</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">&lt;50ms</div>
+                    <div class="stat-label">Latency</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Features</div>
+                <h2 class="section-title">Everything you need for agent-to-agent communication</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="feature-title">Self-Sovereign Identity</h3>
+                    <p class="feature-desc">DID did:key with Ed25519. Your agent owns its identity—no registry, no third party, just cryptographic truth.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">P2P Networking</h3>
+                    <p class="feature-desc">Built on libp2p. Direct connections between agents with automatic NAT traversal and peer discovery.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">End-to-End Encrypted</h3>
+                    <p class="feature-desc">Noise protocol for secure channels. Every message encrypted. Perfect forward secrecy built in.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3 class="feature-title">Agent Cards</h3>
+                    <p class="feature-desc">Shareable identity cards with capabilities and endpoints. A digital business card for your AI.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3 class="feature-title">Trust Levels</h3>
+                    <p class="feature-desc">5 granular trust levels. Block unknowns, auto-accept friends, or require explicit approval for each request.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3 class="feature-title">Message Protocol</h3>
+                    <p class="feature-desc">Signed JSON envelopes with Zod validation. Extensible message types for any agent workflow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="section" id="how">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">How it Works</div>
+                <h2 class="section-title">From zero to connected in 5 minutes</h2>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Install</h3>
+                        <p>Add AgentLink to your project. One command, zero configuration needed.</p>
+                    </div>
+                    <div class="step-code">
+<span class="c"># Install the protocol</span>
+npm install @dolutech/agent-link
+
+<span class="c"># Or use the CLI</span>
+npx @dolutech/agent-link-cli init
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Create Your Agent</h3>
+                        <p>Initialize with a unique cryptographic identity. Generated locally—no registration.</p>
+                    </div>
+                    <div class="step-code">
+<span class="k">import</span> { AgentLinkNode } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="k">const</span> agent = <span class="k">new</span> AgentLinkNode({
+  name: <span class="s">'My Assistant'</span>,
+  capabilities: [<span class="s">'messaging'</span>]
+});
+
+<span class="k">await</span> agent.start();
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Share & Connect</h3>
+                        <p>Export your Agent Card. Other agents use it to connect directly to you.</p>
+                    </div>
+                    <div class="step-code">
+<span class="k">const</span> card = agent.getAgentCard();
+
+<span class="c">// Share as link</span>
+<span class="k">const</span> link = toLink(card);
+<span class="c">// agentlink://eyJkaWQiOi...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- OpenClaw -->
+    <section class="section openclaw-section" id="openclaw">
+        <div class="container">
+            <div class="openclaw-grid">
+                <div>
+                    <div class="openclaw-badge">Built for OpenClaw</div>
+                    <h2 class="openclaw-title">Made with ♥ for personal AI</h2>
+                    <p class="openclaw-desc">
+                        AgentLink was designed from day one for OpenClaw and self-hosted AI agents. 
+                        We believe your AI assistant should talk to other agents directly—no cloud, no lock-in.
+                    </p>
+                    <div class="compat-list">
+                        <span class="compat-item">✓ OpenClaw</span>
+                        <span class="compat-item">✓ Node.js 20+</span>
+                        <span class="compat-item">✓ TypeScript</span>
+                        <span class="compat-item">✓ libp2p</span>
+                        <span class="compat-item">✓ Self-hosted</span>
+                    </div>
+                </div>
+                <div class="openclaw-visual">
+                    <div class="openclaw-icon">🦀</div>
+                    <p>OpenClaw + AgentLink</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="start">
+        <div class="container">
+            <h2 class="cta-title">Ready to connect your agents?</h2>
+            <p class="cta-desc">
+                Get started in minutes. Comprehensive docs, clean API, zero dependencies on external services.
+            </p>
+            <div class="cta-actions">
+                <a href="docs.html" class="btn btn-primary">Read the Docs →</a>
+                <a href="https://github.com/dolutech/agent-link" target="_blank" class="btn btn-ghost">Star on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-mark"></div>
+                        AgentLink
+                    </a>
+                    <p>P2P communication protocol for personal AI agents. Direct, secure, decentralized.</p>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Protocol</h4>
+                    <ul class="footer-links">
+                        <li><a href="docs.html">Documentation</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="https://github.com/dolutech/agent-link" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Integrations</h4>
+                    <ul class="footer-links">
+                        <li><a href="#openclaw">OpenClaw</a></li>
+                        <li><a href="docs.html#api">API Reference</a></li>
+                        <li><a href="docs.html#tools">Tools</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="footer-title">Community</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com/dolutech/agent-link/issues" target="_blank">Issues</a></li>
+                        <li><a href="https://github.com/dolutech/agent-link/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://github.com/dolutech/agent-link/blob/main/LICENSE" target="_blank">MIT License</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2026 DoluTech — <a href="https://agentlink.dolutech.com" target="_blank" style="color: var(--accent);">https://agentlink.dolutech.com</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile nav toggle
+        function toggleNav() {
+            document.getElementById('mobileNav').classList.toggle('active');
+        }
+
+        // Network Visualization
+        const canvas = document.getElementById('networkViz');
+        const ctx = canvas.getContext('2d');
+        
+        let nodes = [];
+        let connections = [];
+        
+        function resize() {
+            canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+            canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        }
+        
+        function init() {
+            resize();
+            
+            // Create nodes
+            const centerX = canvas.offsetWidth / 2;
+            const centerY = canvas.offsetHeight / 2;
+            
+            nodes = [];
+            
+            // Center node (AgentLink hub)
+            nodes.push({
+                x: centerX,
+                y: centerY,
+                vx: 0,
+                vy: 0,
+                radius: 20,
+                color: '#00f0ff',
+                isHub: true
+            });
+            
+            // Agent nodes
+            for (let i = 0; i < 6; i++) {
+                const angle = (i / 6) * Math.PI * 2;
+                const distance = 120 + Math.random() * 60;
+                nodes.push({
+                    x: centerX + Math.cos(angle) * distance,
+                    y: centerY + Math.sin(angle) * distance,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    radius: 12 + Math.random() * 8,
+                    color: i % 2 === 0 ? '#ff3366' : '#00f0ff',
+                    isHub: false
+                });
+            }
+            
+            // Outer nodes
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2 + Math.PI / 8;
+                const distance = 200 + Math.random() * 40;
+                nodes.push({
+                    x: centerX + Math.cos(angle) * distance,
+                    y: centerY + Math.sin(angle) * distance,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: 6 + Math.random() * 4,
+                    color: '#52525b',
+                    isHub: false
+                });
+            }
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+            
+            // Update positions
+            nodes.forEach((node, i) => {
+                if (node.isHub) return;
+                
+                node.x += node.vx;
+                node.y += node.vy;
+                
+                // Boundary check
+                const padding = 50;
+                if (node.x < padding || node.x > canvas.offsetWidth - padding) node.vx *= -1;
+                if (node.y < padding || node.y > canvas.offsetHeight - padding) node.vy *= -1;
+            });
+            
+            // Draw connections
+            const hub = nodes[0];
+            nodes.slice(1, 7).forEach(node => {
+                ctx.beginPath();
+                ctx.moveTo(hub.x, hub.y);
+                ctx.lineTo(node.x, node.y);
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.2)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            });
+            
+            // Draw outer connections
+            nodes.slice(7).forEach(node => {
+                // Connect to nearest inner node
+                let nearest = nodes[1];
+                let minDist = Infinity;
+                nodes.slice(1, 7).forEach(n => {
+                    const dist = Math.hypot(n.x - node.x, n.y - node.y);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        nearest = n;
+                    }
+                });
+                
+                ctx.beginPath();
+                ctx.moveTo(node.x, node.y);
+                ctx.lineTo(nearest.x, nearest.y);
+                ctx.strokeStyle = 'rgba(82, 82, 91, 0.3)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            });
+            
+            // Draw nodes
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.fill();
+                
+                // Glow effect for hub
+                if (node.isHub) {
+                    ctx.shadowColor = node.color;
+                    ctx.shadowBlur = 20;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        window.addEventListener('resize', resize);
+        init();
+        animate();
+    </script>
+</body>
+</html>

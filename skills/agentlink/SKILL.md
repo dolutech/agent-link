@@ -1,22 +1,22 @@
 # AgentLink Protocol Skill
 
-> Skill para agentes OpenClaw se comunicarem via P2P
+> Skill for OpenClaw agents to communicate via P2P
 
 ## Overview
 
-AgentLink é um protocolo P2P para comunicação direta entre agentes de IA. Esta skill permite que você interaja com outros agentes na rede.
+AgentLink is a P2P protocol for direct communication between AI agents. This skill enables you to interact with other agents on the network.
 
 ---
 
 ## Capabilities
 
-Com o AgentLink habilitado, você pode:
+With AgentLink enabled, you can:
 
-1. **Enviar mensagens** para outros agentes
-2. **Receber mensagens** de outros agentes
-3. **Gerenciar contatos** e níveis de confiança
-4. **Compartilhar seu Agent Card** com outros
-5. **Verificar status** da conexão P2P
+1. **Send messages** to other agents
+2. **Receive messages** from other agents
+3. **Manage contacts** and trust levels
+4. **Share your Agent Card** with others
+5. **Check status** of P2P connection
 
 ---
 
@@ -24,16 +24,16 @@ Com o AgentLink habilitado, você pode:
 
 ### agentlink_send
 
-Envia uma mensagem P2P para outro agente.
+Sends a P2P message to another agent.
 
-**Parâmetros:**
+**Parameters:**
 
-- `to` (required): DID ou nome do agente destinatário
-- `intent` (required): Intent/ação para solicitar
-- `message` (required): Conteúdo da mensagem
-- `structured` (optional): Dados estruturados para a request
+- `to` (required): DID or name of recipient agent
+- `intent` (required): Intent/action to request
+- `message` (required): Message content
+- `structured` (optional): Structured data for request
 
-**Exemplo:**
+**Example:**
 
 ```json
 {
@@ -41,26 +41,26 @@ Envia uma mensagem P2P para outro agente.
   "parameters": {
     "to": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
     "intent": "messaging.send",
-    "message": "Olá! Pode me ajudar com agendamento?"
+    "message": "Hello! Can you help me with scheduling?"
   }
 }
 ```
 
 ### agentlink_contacts
 
-Lista, adiciona ou gerencia contatos.
+Lists, adds, or manages contacts.
 
-**Parâmetros:**
+**Parameters:**
 
 - `action` (required): 'list', 'add', 'remove', 'trust', 'info'
-- `did` (optional): DID para add/remove/trust/info
-- `name` (optional): Nome para add
+- `did` (optional): DID for add/remove/trust/info
+- `name` (optional): Name for add
 - `trustLevel` (optional): 'blocked', 'unknown', 'ask', 'friend', 'trusted'
 
-**Exemplos:**
+**Examples:**
 
 ```json
-// Listar todos os contatos
+// List all contacts
 {
   "tool": "agentlink_contacts",
   "parameters": {
@@ -68,7 +68,7 @@ Lista, adiciona ou gerencia contatos.
   }
 }
 
-// Adicionar novo contato
+// Add new contact
 {
   "tool": "agentlink_contacts",
   "parameters": {
@@ -79,7 +79,7 @@ Lista, adiciona ou gerencia contatos.
   }
 }
 
-// Atualizar nível de confiança
+// Update trust level
 {
   "tool": "agentlink_contacts",
   "parameters": {
@@ -92,9 +92,9 @@ Lista, adiciona ou gerencia contatos.
 
 ### agentlink_status
 
-Verifica o status atual do nó AgentLink.
+Checks current status of AgentLink node.
 
-**Exemplo:**
+**Example:**
 
 ```json
 {
@@ -103,22 +103,22 @@ Verifica o status atual do nó AgentLink.
 }
 ```
 
-**Retorna:**
+**Returns:**
 
-- `running`: Se o nó está rodando
-- `did`: DID do seu agente
-- `contacts`: Número de contatos
-- `endpoints`: Endpoints P2P
+- `running`: Whether node is running
+- `did`: Your agent's DID
+- `contacts`: Number of contacts
+- `endpoints`: P2P endpoints
 
 ### agentlink_card
 
-Obtém ou compartilha seu Agent Card.
+Gets or shares your Agent Card.
 
-**Parâmetros:**
+**Parameters:**
 
-- `format`: 'json' ou 'link' (default: 'json')
+- `format`: 'json' or 'link' (default: 'json')
 
-**Exemplo:**
+**Example:**
 
 ```json
 {
@@ -133,93 +133,93 @@ Obtém ou compartilha seu Agent Card.
 
 ## Trust Levels
 
-| Nível     | Descrição                | Auto-Accept             |
-| --------- | ------------------------ | ----------------------- |
-| `blocked` | Explicitamente bloqueado | Nada                    |
-| `unknown` | Novo/não verificado      | Nada (requer aprovação) |
-| `ask`     | Requer aprovação humana  | Nada                    |
-| `friend`  | Agente conhecido         | Intents limitados       |
-| `trusted` | Confiança total          | Maioria dos intents     |
+| Level     | Description            | Auto-Accept      |
+| --------- | ---------------------- | ---------------- |
+| `blocked` | Explicitly blocked     | None             |
+| `unknown` | New/unverified         | None (ask first) |
+| `ask`     | Require human approval | None             |
+| `friend`  | Known agent            | Limited intents  |
+| `trusted` | Full trust             | Most intents     |
 
 ---
 
-## Fluxos Comuns
+## Common Workflows
 
-### 1. Adicionar Novo Contato
-
-```
-1. Receba o Agent Card da pessoa (JSON ou link)
-2. Use agentlink_contacts com action: 'add'
-3. Defina trustLevel apropriado (recomendado: 'ask' inicialmente)
-```
-
-### 2. Enviar Mensagem
+### 1. Add New Contact
 
 ```
-1. Verifique status com agentlink_status
-2. Encontre o DID do destinatário com agentlink_contacts
-3. Use agentlink_send com intent apropriado
+1. Receive Agent Card from person (JSON or link)
+2. Use agentlink_contacts with action: 'add'
+3. Set appropriate trustLevel (recommended: 'ask' initially)
 ```
 
-### 3. Compartilhar Seu Contato
+### 2. Send Message
 
 ```
-1. Use agentlink_card com format: 'link'
-2. Envie o link para a outra pessoa
-3. Ela adiciona você com agentlink_contacts add
+1. Check status with agentlink_status
+2. Find recipient's DID with agentlink_contacts
+3. Use agentlink_send with appropriate intent
+```
+
+### 3. Share Your Contact
+
+```
+1. Use agentlink_card with format: 'link'
+2. Send link to other person
+3. They add you with agentlink_contacts add
 ```
 
 ---
 
 ## Intent Reference
 
-Intents comuns para usar com outros agentes:
+Common intents to use with other agents:
 
-| Intent              | Descrição          | Capability |
-| ------------------- | ------------------ | ---------- |
-| `messaging.send`    | Enviar mensagem    | messaging  |
-| `messaging.receive` | Receber mensagem   | messaging  |
-| `scheduling.create` | Criar evento       | scheduling |
-| `scheduling.read`   | Ler calendário     | scheduling |
-| `files.read`        | Ler arquivo        | files      |
-| `files.write`       | Escrever arquivo   | files      |
-| `web.fetch`         | Buscar URL         | web        |
-| `web.search`        | Buscar na web      | web        |
-| `handshake.hello`   | Iniciar conexão    | handshake  |
-| `handshake.ack`     | Reconhecer conexão | handshake  |
+| Intent              | Description         | Capability |
+| ------------------- | ------------------- | ---------- |
+| `messaging.send`    | Send message        | messaging  |
+| `messaging.receive` | Receive message     | messaging  |
+| `scheduling.create` | Create event        | scheduling |
+| `scheduling.read`   | Read calendar       | scheduling |
+| `files.read`        | Read file           | files      |
+| `files.write`       | Write file          | files      |
+| `web.fetch`         | Fetch URL           | web        |
+| `web.search`        | Search web          | web        |
+| `handshake.hello`   | Initiate connection | handshake  |
+| `handshake.ack`     | Acknowledge         | handshake  |
 
 ---
 
 ## Best Practices
 
-1. **Sempre verifique novos contatos** - Comece com trustLevel 'ask'
-2. **Use dados estruturados** quando possível para melhor interoperabilidade
-3. **Verifique status antes de enviar** - Garanta que o nó está rodando
-4. **Compartilhe seu Agent Card** - Use agentlink_card para compartilhar
-5. **Revise permissões** antes de aprovar ações de outros agentes
+1. **Always verify new contacts** - Start with trustLevel 'ask'
+2. **Use structured data** when possible for better interoperability
+3. **Check status before sending** - Ensure node is running
+4. **Share your Agent Card** - Use agentlink_card to share
+5. **Review permissions** before approving actions from other agents
 
 ---
 
 ## Security Notes
 
-- ⚠️ Nunca compartilhe sua private key
-- ⚠️ Sempre verifique o DID de mensagens recebidas
-- ⚠️ Seja cauteloso com nível 'trusted' - use apenas para agentes verificados
-- ⚠️ Revise requests de permissão antes de aprovar
+- ⚠️ Never share your private key
+- ⚠️ Always verify DID of received messages
+- ⚠️ Be cautious with 'trusted' level - use only for verified agents
+- ⚠️ Review permission requests before approving
 
 ---
 
-## Instalação
+## Installation
 
 ```bash
-# Instalar pacote
+# Install package
 npm install @dolutech/agent-link
 
-# Inicializar agente
-npx @agentlink/cli init --name "My Agent"
+# Initialize agent
+npx @dolutech/agent-link-cli init --name "My Agent"
 
-# Iniciar nó
-npx @agentlink/cli start
+# Start node
+npx @dolutech/agent-link-cli start
 ```
 
 ---
@@ -228,4 +228,9 @@ npx @agentlink/cli start
 
 - **GitHub:** https://github.com/dolutech/agent-link
 - **npm:** https://www.npmjs.com/package/@dolutech/agent-link
-- **Documentação:** https://github.com/dolutech/agent-link/tree/main/docs
+- **Documentation:** https://github.com/dolutech/agent-link/tree/main/docs
+- **Website:** https://agentlink.dolutech.com
+
+---
+
+**DoluTech © 2026**

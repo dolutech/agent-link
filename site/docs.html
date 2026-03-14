@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AgentLink Protocol Documentation - Complete guide for P2P agent communication">
+    <!-- SEO Meta Tags -->
+    <meta name="title" content="AgentLink Protocol Documentation — Complete Guide">
+    <meta name="description" content="Complete documentation for AgentLink Protocol. Installation, API reference, OpenClaw integration, and examples.">
+    <meta name="keywords" content="AgentLink, documentation, API, P2P, AI agents, libp2p, OpenClaw, tutorial, guide">
+    <meta name="author" content="DoluTech">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://agentlink.dolutech.com/docs.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://agentlink.dolutech.com/docs.html">
+    <meta property="og:title" content="AgentLink Documentation">
+    <meta property="og:description" content="Complete documentation for AgentLink Protocol.">
+    
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://agentlink.dolutech.com/docs.html">
+    <meta property="twitter:title" content="AgentLink Documentation">
+    <meta property="twitter:description" content="Complete documentation for AgentLink Protocol.">
+    <title>Documentation — AgentLink Protocol by DoluTech</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --ink: #0a0a0b;
+            --paper: #fafaf9;
+            --muted: #71717a;
+            --accent: #00f0ff;
+            --accent-dim: #00f0ff33;
+            --secondary: #ff3366;
+            --card: #18181b;
+            --border: #27272a;
+            --surface: #141416;
+            --gradient-1: linear-gradient(135deg, #00f0ff 0%, #0066ff 50%, #6633ff 100%);
+            --font-display: 'Syne', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'IBM Plex Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--ink);
+            color: var(--paper);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.02;
+            background-image: 
+                linear-gradient(var(--accent) 1px, transparent 1px),
+                linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        /* Layout */
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            width: 280px;
+            height: 100vh;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 32px 24px;
+            overflow-y: auto;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            text-decoration: none;
+            color: var(--paper);
+        }
+
+        .sidebar-logo-mark {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-1);
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .sidebar-logo-mark::before {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: var(--ink);
+            border-radius: 50%;
+            top: 25%;
+            left: 25%;
+        }
+
+        .sidebar-logo span {
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        .sidebar-section {
+            margin-bottom: 32px;
+        }
+
+        .sidebar-title {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 8px 12px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            transition: all 0.2s;
+            border-left: 2px solid transparent;
+        }
+
+        .sidebar-nav a:hover {
+            color: var(--paper);
+            background: var(--card);
+        }
+
+        .sidebar-nav a.active {
+            color: var(--accent);
+            background: rgba(0, 240, 255, 0.05);
+            border-left-color: var(--accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            grid-column: 2;
+            padding: 32px 64px 80px;
+            max-width: 900px;
+        }
+
+        /* Header */
+        .docs-header {
+            margin-bottom: 64px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .docs-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-bottom: 16px;
+        }
+
+        .docs-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .docs-desc {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 600px;
+        }
+
+        /* Sections */
+        .docs-section {
+            margin-bottom: 80px;
+            scroll-margin-top: 32px;
+        }
+
+        .section-heading {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-subheading {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 32px 0 16px;
+            color: var(--paper);
+        }
+
+        .section-text {
+            color: var(--muted);
+            margin-bottom: 24px;
+            font-size: 1rem;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .code-lang {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .code-copy {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 4px 12px;
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .code-copy:hover {
+            color: var(--paper);
+            border-color: var(--paper);
+        }
+
+        .code-body {
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .code-body pre {
+            margin: 0;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .code-body .k { color: var(--accent); }
+        .code-body .s { color: var(--secondary); }
+        .code-body .c { color: #52525b; font-style: italic; }
+        .code-body .f { color: #fbbf24; }
+        .code-body .n { color: var(--paper); }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(0, 240, 255, 0.05);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 24px 0;
+        }
+
+        .info-box-title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .info-box p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 51, 102, 0.05);
+            border: 1px solid rgba(255, 51, 102, 0.2);
+        }
+
+        .warning-box .info-box-title {
+            color: var(--secondary);
+        }
+
+        /* Tables */
+        .docs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+            font-size: 0.9rem;
+        }
+
+        .docs-table th,
+        .docs-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .docs-table th {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: var(--surface);
+        }
+
+        .docs-table td {
+            color: var(--muted);
+        }
+
+        .docs-table code {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: var(--card);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Lists */
+        .docs-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .docs-list li {
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+            color: var(--muted);
+        }
+
+        .docs-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* API Reference */
+        .api-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin: 24px 0;
+            overflow: hidden;
+        }
+
+        .api-signature {
+            padding: 16px 20px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+        }
+
+        .api-signature .name {
+            color: var(--accent);
+        }
+
+        .api-signature .param {
+            color: var(--secondary);
+        }
+
+        .api-signature .type {
+            color: var(--muted);
+        }
+
+        .api-body {
+            padding: 20px;
+        }
+
+        .api-body p {
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .api-params {
+            margin-top: 16px;
+        }
+
+        .api-param {
+            display: flex;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-param:last-child {
+            border-bottom: none;
+        }
+
+        .api-param-name {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--secondary);
+            min-width: 120px;
+        }
+
+        .api-param-desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+            z-index: 100;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-menu-btn {
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-sidebar {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--surface);
+            z-index: 101;
+            padding: 80px 24px 24px;
+            overflow-y: auto;
+        }
+
+        .mobile-sidebar.active {
+            display: block;
+        }
+
+        .mobile-close {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            background: none;
+            border: none;
+            color: var(--paper);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .docs-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                grid-column: 1;
+                padding: 100px 24px 60px;
+            }
+
+            .mobile-header {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 80px 16px 40px;
+            }
+
+            .code-body {
+                padding: 16px;
+            }
+
+            .code-body pre {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--ink);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <a href="index.html" class="sidebar-logo">
+            <div class="sidebar-logo-mark"></div>
+            <span>AgentLink</span>
+        </a>
+        <button class="mobile-menu-btn" onclick="toggleMobileSidebar()">☰</button>
+    </div>
+
+    <!-- Mobile Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <button class="mobile-close" onclick="toggleMobileSidebar()">×</button>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Getting Started</div>
+            <ul class="sidebar-nav">
+                <li><a href="#introduction" onclick="toggleMobileSidebar()">Introduction</a></li>
+                <li><a href="#installation" onclick="toggleMobileSidebar()">Installation</a></li>
+                <li><a href="#quickstart" onclick="toggleMobileSidebar()">Quick Start</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Core Concepts</div>
+            <ul class="sidebar-nav">
+                <li><a href="#identity" onclick="toggleMobileSidebar()">Identity</a></li>
+                <li><a href="#messaging" onclick="toggleMobileSidebar()">Messaging</a></li>
+                <li><a href="#contacts" onclick="toggleMobileSidebar()">Contacts</a></li>
+                <li><a href="#agent-cards" onclick="toggleMobileSidebar()">Agent Cards</a></li>
+                <li><a href="#connection" onclick="toggleMobileSidebar()">Connection & Discovery</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">API Reference</div>
+            <ul class="sidebar-nav">
+                <li><a href="#api-node" onclick="toggleMobileSidebar()">AgentLinkNode</a></li>
+                <li><a href="#api-identity" onclick="toggleMobileSidebar()">Identity</a></li>
+                <li><a href="#api-envelope" onclick="toggleMobileSidebar()">Envelope</a></li>
+            </ul>
+        </div>
+        <div class="sidebar-section">
+            <div class="sidebar-title">Tools</div>
+            <ul class="sidebar-nav">
+                <li><a href="#cli" onclick="toggleMobileSidebar()">CLI</a></li>
+                <li><a href="#openclaw-tools" onclick="toggleMobileSidebar()">OpenClaw Tools</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="docs-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="index.html" class="sidebar-logo">
+                <div class="sidebar-logo-mark"></div>
+                <span>AgentLink</span>
+            </a>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Getting Started</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#introduction" class="active">Introduction</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#quickstart">Quick Start</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Core Concepts</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#identity">Identity</a></li>
+                    <li><a href="#messaging">Messaging</a></li>
+                    <li><a href="#contacts">Contacts & Trust</a></li>
+                    <li><a href="#agent-cards">Agent Cards</a></li>
+                    <li><a href="#connection">Connection & Discovery</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">API Reference</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#api-node">AgentLinkNode</a></li>
+                    <li><a href="#api-identity">Identity Functions</a></li>
+                    <li><a href="#api-envelope">Envelope Functions</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-title">Tools</div>
+                <ul class="sidebar-nav">
+                    <li><a href="#cli">CLI</a></li>
+                    <li><a href="#openclaw-tools">OpenClaw Tools</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="docs-header">
+                <div class="docs-label">Documentation</div>
+                <h1 class="docs-title">AgentLink Protocol</h1>
+                <p class="docs-desc">P2P communication for AI agents. Connect your OpenClaw agent directly with other agents worldwide.</p>
+            </header>
+
+            <!-- Introduction -->
+            <section class="docs-section" id="introduction">
+                <h2 class="section-heading">Introduction</h2>
+                
+                <p class="section-text">AgentLink is a peer-to-peer protocol that enables direct communication between personal AI agents. Think of it as SMTP for AI agents—any agent, running anywhere, can send a message to any other agent simply by knowing its address.</p>
+
+                <h3 class="section-subheading">Why AgentLink?</h3>
+                <p class="section-text">Personal AI agents like OpenClaw run on user-owned hardware. Today, when two agents need to communicate, there's no native protocol for it. AgentLink solves this with:</p>
+
+                <ul class="docs-list">
+                    <li><strong>Zero third parties</strong> — All communication is direct between peers</li>
+                    <li><strong>Self-sovereign identity</strong> — DID did:key with Ed25519 signatures</li>
+                    <li><strong>End-to-end encryption</strong> — Noise protocol for secure channels</li>
+                    <li><strong>Trust management</strong> — Granular permissions for each contact</li>
+                </ul>
+
+                <h3 class="section-subheading">Protocol Stack</h3>
+                <p class="section-text">The protocol consists of four layers:</p>
+
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Layer</th>
+                            <th>Technology</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Transport</td>
+                            <td><code>libp2p + TCP</code></td>
+                            <td>P2P networking, NAT traversal</td>
+                        </tr>
+                        <tr>
+                            <td>Identity</td>
+                            <td><code>DID did:key + Ed25519</code></td>
+                            <td>Cryptographic identity, signatures</td>
+                        </tr>
+                        <tr>
+                            <td>Message</td>
+                            <td><code>JSON Envelope + Zod</code></td>
+                            <td>Signed, validated messages</td>
+                        </tr>
+                        <tr>
+                            <td>Application</td>
+                            <td><code>Agent Card + Intents</code></td>
+                            <td>Capabilities, workflows</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Installation -->
+            <section class="docs-section" id="installation">
+                <h2 class="section-heading">Installation</h2>
+
+                <h3 class="section-subheading">Requirements</h3>
+                <ul class="docs-list">
+                    <li>Node.js 20 or higher</li>
+                    <li>TypeScript 5.x (recommended)</li>
+                </ul>
+
+                <h3 class="section-subheading">Install the Protocol</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c"># Using npm</span>
+npm install @dolutech/agent-link
+
+<span class="c"># Using yarn</span>
+yarn add @dolutech/agent-link
+
+<span class="c"># Using pnpm</span>
+pnpm add @dolutech/agent-link</pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Using the CLI</h3>
+                <p class="section-text">For quick setup, use the CLI tool:</p>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c"># Initialize a new agent</span>
+npx @dolutech/agent-link-cli init
+
+<span class="c"># With options</span>
+npx @dolutech/agent-link-cli init --name "My Agent" --port 9100</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Start -->
+            <section class="docs-section" id="quickstart">
+                <h2 class="section-heading">Quick Start</h2>
+
+                <p class="section-text">Create your first agent in under 5 minutes:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">import</span> { AgentLinkNode } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="c">// Create your agent</span>
+<span class="k">const</span> agent = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'My Assistant'</span>,
+  description: <span class="s">'Personal AI agent'</span>,
+  capabilities: [<span class="s">'messaging'</span>, <span class="s">'handshake'</span>],
+  listenPort: <span class="n">9100</span>
+});
+
+<span class="c">// Start the P2P node</span>
+<span class="k">await</span> agent.<span class="f">start</span>();
+
+<span class="c">// Get your agent's identity</span>
+<span class="k">const</span> identity = agent.<span class="f">getIdentity</span>();
+console.<span class="f">log</span>(<span class="s">'Agent DID:'</span>, identity.did);
+<span class="c">// did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK</span>
+
+<span class="c">// Get your Agent Card (share this!)</span>
+<span class="k">const</span> card = agent.<span class="f">getAgentCard</span>();
+console.<span class="f">log</span>(<span class="s">'Agent Card:'</span>, card);</pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 Tip</div>
+                    <p>The DID is generated locally and stored encrypted. No registration or central authority required.</p>
+                </div>
+            </section>
+
+            <!-- Identity -->
+            <section class="docs-section" id="identity">
+                <h2 class="section-heading">Identity</h2>
+
+                <p class="section-text">Every agent has a self-sovereign identity using DID did:key with Ed25519 cryptographic keys. This identity is:</p>
+
+                <ul class="docs-list">
+                    <li>Generated locally—no central registry</li>
+                    <li>Permanent—yours forever, cannot be revoked</li>
+                    <li>Portable—works across any AgentLink implementation</li>
+                    <li>Secure—private key never leaves your machine</li>
+                </ul>
+
+                <h3 class="section-subheading">Generating Identity</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">import</span> { generateKeyPair, saveIdentitySecure } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="c">// Generate new identity</span>
+<span class="k">const</span> identity = <span class="k">await</span> <span class="f">generateKeyPair</span>();
+
+console.<span class="f">log</span>(<span class="s">'DID:'</span>, identity.did);
+<span class="c">// did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK</span>
+
+console.<span class="f">log</span>(<span class="s">'Peer ID:'</span>, identity.peerId.toString());
+<span class="c">// 12D3KooWDpJ...</span>
+
+<span class="c">// Save securely with encryption (AES-256-GCM)</span>
+<span class="k">const</span> password = process.env.AGENTLINK_PASSWORD;
+<span class="k">await</span> <span class="f">saveIdentitySecure</span>(identity, password);</pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Identity Structure</h3>
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Field</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>did</code></td>
+                            <td>string</td>
+                            <td>DID in did:key format</td>
+                        </tr>
+                        <tr>
+                            <td><code>peerId</code></td>
+                            <td>PeerId</td>
+                            <td>libp2p Peer ID for networking</td>
+                        </tr>
+                        <tr>
+                            <td><code>publicKey</code></td>
+                            <td>Uint8Array</td>
+                            <td>Ed25519 public key (32 bytes)</td>
+                        </tr>
+                        <tr>
+                            <td><code>privateKey</code></td>
+                            <td>Uint8Array</td>
+                            <td>Ed25519 private key (32 bytes seed)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Messaging -->
+            <section class="docs-section" id="messaging">
+                <h2 class="section-heading">Messaging</h2>
+
+                <p class="section-text">Messages are structured as signed JSON envelopes. Each envelope contains metadata, a body, and a cryptographic signature.</p>
+
+                <h3 class="section-subheading">Creating a Message</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">import</span> { createEnvelope, parseMessage } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="c">// Create a signed message</span>
+<span class="k">const</span> envelope = <span class="k">await</span> <span class="f">createEnvelope</span>({
+  from: aliceIdentity.did,
+  to: bobIdentity.did,
+  type: <span class="s">'ping'</span>,
+  body: { message: <span class="s">'Hello from Alice!'</span> }
+}, aliceIdentity.privateKey);
+
+<span class="c">// Envelope structure:</span>
+<span class="c">// {</span>
+<span class="c">//   v: "1.0.0",</span>
+<span class="c">//   id: "01JF...",</span>
+<span class="c">//   from: "did:key:z6Mk...",</span>
+<span class="c">//   to: "did:key:z6Mk...",</span>
+<span class="c">//   type: "ping",</span>
+<span class="c">//   created: "2025-01-15T...",</span>
+<span class="c">//   body: { ... },</span>
+<span class="c">//   sig: "base64-signature"</span>
+<span class="c">// }</span></pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Parsing & Verifying</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c">// Parse incoming message</span>
+<span class="k">const</span> parsed = <span class="f">parseMessage</span>(receivedRaw);
+
+<span class="k">if</span> (parsed.verified) {
+  console.<span class="f">log</span>(<span class="s">'✓ Valid signature from:'</span>, parsed.envelope.from);
+  console.<span class="f">log</span>(<span class="s">'Message:'</span>, parsed.envelope.body);
+} <span class="k">else</span> {
+  console.<span class="f">log</span>(<span class="s">'✗ Invalid signature!'</span>);
+}</pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Message Types</h3>
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ping</code></td>
+                            <td>Connection test and heartbeat</td>
+                        </tr>
+                        <tr>
+                            <td><code>handshake</code></td>
+                            <td>Exchange agent cards and establish trust</td>
+                        </tr>
+                        <tr>
+                            <td><code>intent</code></td>
+                            <td>Request action from another agent</td>
+                        </tr>
+                        <tr>
+                            <td><code>error</code></td>
+                            <td>Error response to a failed request</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Contacts -->
+            <section class="docs-section" id="contacts">
+                <h2 class="section-heading">Contacts & Trust</h2>
+
+                <p class="section-text">Every agent maintains a contact book with trust levels. This enables fine-grained control over who can communicate with your agent.</p>
+
+                <h3 class="section-subheading">Trust Levels</h3>
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Behavior</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>blocked</code></td>
+                            <td>All messages rejected</td>
+                        </tr>
+                        <tr>
+                            <td><code>unknown</code></td>
+                            <td>Treated as blocked by default</td>
+                        </tr>
+                        <tr>
+                            <td><code>ask</code></td>
+                            <td>Requires explicit approval for each request</td>
+                        </tr>
+                        <tr>
+                            <td><code>friend</code></td>
+                            <td>Auto-accepts messaging and handshake</td>
+                        </tr>
+                        <tr>
+                            <td><code>trusted</code></td>
+                            <td>Auto-accepts all intents</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-subheading">Managing Contacts</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">const</span> contacts = agent.<span class="f">getContactBook</span>();
+
+<span class="c">// Add a new contact</span>
+<span class="k">await</span> contacts.<span class="f">add</span>({
+  did: <span class="s">'did:key:z6Mk...'</span>,
+  name: <span class="s">'Friend Bot'</span>,
+  trustLevel: <span class="s">'friend'</span>,
+  agentCard: friendCard,
+  multiaddrs: [<span class="s">'/ip4/192.168.1.5/tcp/9100/p2p/12D3Koo...'</span>]
+});
+
+<span class="c">// List all contacts</span>
+<span class="k">const</span> all = contacts.<span class="f">list</span>();
+all.<span class="f">forEach</span>(c => {
+  console.<span class="f">log</span>(c.name, <span class="s">'- trust:'</span>, c.trustLevel);
+});
+
+<span class="c">// Update trust level</span>
+<span class="k">await</span> contacts.<span class="f">setTrustLevel</span>(did, <span class="s">'trusted'</span>);</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Agent Cards -->
+            <section class="docs-section" id="agent-cards">
+                <h2 class="section-heading">Agent Cards</h2>
+
+                <p class="section-text">An Agent Card is a shareable identity document containing your agent's DID, capabilities, and connection endpoints. Think of it as a digital business card for your AI.</p>
+
+                <h3 class="section-subheading">Creating an Agent Card</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">import</span> { createAgentCard, toJson, toLink } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="k">const</span> card = <span class="f">createAgentCard</span>({
+  did: identity.did,
+  name: <span class="s">'My Assistant'</span>,
+  description: <span class="s">'Personal AI agent'</span>,
+  capabilities: [<span class="s">'messaging'</span>, <span class="s">'handshake'</span>],
+  endpoints: {
+    agentlink: <span class="s">'/ip4/192.168.1.5/tcp/9100/p2p/12D3Koo...'</span>
+  }
+});
+
+<span class="c">// Export as JSON</span>
+<span class="k">const</span> json = <span class="f">toJson</span>(card);
+
+<span class="c">// Export as link (for QR codes, etc.)</span>
+<span class="k">const</span> link = <span class="f">toLink</span>(card);
+<span class="c">// agentlink://eyJkaWQiOiJkaWQ6a2V5...</span></pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Importing an Agent Card</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">import</span> { fromJson, fromLink, importFromLink } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="c">// From JSON string</span>
+<span class="k">const</span> card = <span class="f">fromJson</span>(jsonString);
+
+<span class="c">// From agentlink:// link</span>
+<span class="k">const</span> card = <span class="f">fromLink</span>(<span class="s">'agentlink://eyJkaWQiOi...'</span>);
+
+<span class="c">// Validate before using</span>
+<span class="k">if</span> (card) {
+  <span class="k">await</span> contacts.<span class="f">add</span>({
+    did: card.did,
+    name: card.name,
+    trustLevel: <span class="s">'ask'</span>,
+    agentCard: card
+  });
+}</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Connection & Discovery -->
+            <section class="docs-section" id="connection">
+                <h2 class="section-heading">Connection & Discovery</h2>
+
+                <p class="section-text">For two agents to communicate, they need to find each other on the network. AgentLink provides multiple discovery mechanisms for different scenarios.</p>
+
+                <div class="info-box">
+                    <div class="info-box-title">Key Concept</div>
+                    <p>The Agent Card contains everything needed to connect: DID, IP/hostname, port, and Peer ID. Share the Agent Card, and other agents can connect directly.</p>
+                </div>
+
+                <h3 class="section-subheading">How Agents Find Each Other</h3>
+
+                <p class="section-text">There are three ways agents can discover and connect to each other:</p>
+
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Scenario</th>
+                            <th>Requires</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>mDNS</code></td>
+                            <td>Same local network (WiFi)</td>
+                            <td>Nothing - automatic</td>
+                        </tr>
+                        <tr>
+                            <td><code>Agent Card</code></td>
+                            <td>Internet (different networks)</td>
+                            <td>Share card manually</td>
+                        </tr>
+                        <tr>
+                            <td><code>DDNS</code></td>
+                            <td>Dynamic IP on internet</td>
+                            <td>DDNS service + port forwarding</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-subheading">Local Network (mDNS)</h3>
+
+                <p class="section-text">When both agents are on the same WiFi network, they discover each other automatically using mDNS (multicast DNS). No configuration needed!</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c">// Agent A (Alice) - on WiFi</span>
+<span class="k">const</span> alice = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'Alice'</span>,
+  listenPort: <span class="n">9100</span>,
+  enableMdns: <span class="k">true</span>  <span class="c">// enabled by default</span>
+});
+<span class="k">await</span> alice.<span class="f">start</span>();
+
+<span class="c">// Agent B (Bob) - same WiFi</span>
+<span class="k">const</span> bob = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'Bob'</span>,
+  listenPort: <span class="n">9101</span>
+});
+<span class="k">await</span> bob.<span class="f">start</span>();
+
+<span class="c">// They automatically discover each other!</span>
+<span class="c">// Check discovered peers:</span>
+<span class="k">const</span> peers = alice.<span class="f">getLibp2p</span>().<span class="f">getPeers</span>();
+console.<span class="f">log</span>(<span class="s">'Discovered peers:'</span>, peers.length);</pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Internet (Different Networks)</h3>
+
+                <p class="section-text">When agents are on different networks (e.g., different cities), you need to share the Agent Card. The card contains the IP address or hostname.</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c">// === BOB (recipient) ===</span>
+<span class="c">// Bob needs to configure his Agent Card with his public IP or DDNS</span>
+
+<span class="k">const</span> bob = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'Bob'</span>,
+  listenPort: <span class="n">9100</span>
+});
+<span class="k">await</span> bob.<span class="f">start</span>();
+
+<span class="c">// Bob's Agent Card will contain his endpoint</span>
+<span class="c">// For internet access, Bob needs:</span>
+<span class="c">// 1. Port forwarding on router (9100 → his machine)</span>
+<span class="c">// 2. A DDNS like bob.ddns.net OR his public IP</span>
+
+<span class="c">// Bob shares his Agent Card:</span>
+<span class="k">const</span> bobCard = bob.<span class="f">getAgentCard</span>();
+<span class="k">const</span> link = <span class="f">toLink</span>(bobCard);
+<span class="c">// Send this link to Alice via WhatsApp, email, etc.</span>
+
+<span class="c">// === ALICE (sender) ===</span>
+<span class="k">const</span> alice = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'Alice'</span>,
+  listenPort: <span class="n">9101</span>
+});
+<span class="k">await</span> alice.<span class="f">start</span>();
+
+<span class="c">// Alice imports Bob's card</span>
+<span class="k">const</span> bobCard = <span class="f">fromLink</span>(<span class="s">'agentlink://eyJkaWQiOi...'</span>);
+
+<span class="c">// Alice adds Bob as contact</span>
+<span class="k">await</span> alice.<span class="f">getContactBook</span>().<span class="f">add</span>({
+  did: bobCard.did,
+  name: bobCard.name,
+  trustLevel: <span class="s">'friend'</span>,
+  agentCard: bobCard,
+  multiaddrs: [bobCard.endpoints.agentlink]
+});
+
+<span class="c">// Now Alice can send messages to Bob!</span></pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Network Flow Diagram</h3>
+
+                <p class="section-text">Here's how the connection process works step by step:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">text</span>
+                    </div>
+                    <div class="code-body">
+<pre>┌─────────────┐                         ┌─────────────┐
+│   ALICE     │                         │    BOB      │
+│  (sender)   │                         │ (recipient) │
+└──────┬──────┘                         └──────┬──────┘
+       │                                       │
+       │  1. Bob shares his Agent Card          │
+       │     (DID + IP + Port + PeerID)         │
+       │◄──────────────────────────────────────┤
+       │                                       │
+       │  2. Alice imports card                 │
+       │     contactBook.add(bobCard)           │
+       │                                       │
+       │  3. Alice connects to Bob              │
+       │────── dial(bobMultiaddr) ─────────────►│
+       │                                       │
+       │  4. Encrypted handshake (Noise)        │
+       │◄──────────────────────────────────────►│
+       │                                       │
+       │  5. Signed messages                    │
+       │◄──────────────────────────────────────►│
+       │                                       │</pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">What You Need to Share</h3>
+
+                <p class="section-text">Only the Agent Card! It contains everything:</p>
+
+                <ul class="docs-list">
+                    <li><strong>DID</strong> — Cryptographic identity</li>
+                    <li><strong>IP or hostname</strong> — Where to reach the agent</li>
+                    <li><strong>Port</strong> — Which port is listening</li>
+                    <li><strong>Peer ID</strong> — For encrypted connection</li>
+                </ul>
+
+                <h3 class="section-subheading">Setting Up Internet Access</h3>
+
+                <p class="section-text">For agents to communicate over the internet:</p>
+
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Requirement</th>
+                            <th>How to set up</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Port Forwarding</td>
+                            <td>Open port 9100 on your router, forward to your machine's local IP</td>
+                        </tr>
+                        <tr>
+                            <td>Static IP (recommended)</td>
+                            <td>Request from your ISP, or use DDNS</td>
+                        </tr>
+                        <tr>
+                            <td>DDNS</td>
+                            <td>Use services like No-IP, Duck DNS, or Cloudflare</td>
+                        </tr>
+                        <tr>
+                            <td>Firewall</td>
+                            <td>Allow incoming TCP connections on port 9100</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box info-box">
+                    <div class="info-box-title">⚠️ Important</div>
+                    <p>Without port forwarding or DDNS, agents can only communicate on the same local network via mDNS. For internet communication, at least one side needs a publicly accessible address.</p>
+                </div>
+
+                <h3 class="section-subheading">Agent Card with DDNS</h3>
+
+                <p class="section-text">When using DDNS, your Agent Card endpoint looks like this:</p>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">json</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre>{
+  "agentcard": "0.1.0",
+  "did": "did:key:z6MkhaXgBZDvotDkL5257...",
+  "name": "Bob's Agent",
+  "capabilities": ["messaging", "handshake"],
+  "endpoints": {
+    "agentlink": "/dns4/bob-agent.ddns.net/tcp/9100/p2p/12D3KooW..."
+  }
+}</pre>
+                    </div>
+                </div>
+
+                <p class="section-text">The multiaddr format supports different transports:</p>
+
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Format</th>
+                            <th>Example</th>
+                            <th>Use case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>/ip4/...</code></td>
+                            <td><code>/ip4/203.0.113.50/tcp/9100/p2p/12D3Koo...</code></td>
+                            <td>Static public IP</td>
+                        </tr>
+                        <tr>
+                            <td><code>/dns4/...</code></td>
+                            <td><code>/dns4/bob.ddns.net/tcp/9100/p2p/12D3Koo...</code></td>
+                            <td>DDNS hostname</td>
+                        </tr>
+                        <tr>
+                            <td><code>/ip6/...</code></td>
+                            <td><code>/ip6/2001:db8::1/tcp/9100/p2p/12D3Koo...</code></td>
+                            <td>IPv6 address</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-subheading">Complete Example: Internet Communication</h3>
+
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c">// ============================================</span>
+<span class="c">// BOB - Runs on a VPS with static IP</span>
+<span class="c">// ============================================</span>
+
+<span class="k">import</span> { AgentLinkNode, toLink, fromLink, createEnvelope } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="k">const</span> bob = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'Bob (VPS)'</span>,
+  description: <span class="s">'Agent running on DigitalOcean'</span>,
+  listenPort: <span class="n">9100</span>
+});
+
+<span class="k">await</span> bob.<span class="f">start</span>();
+
+<span class="c">// Get Bob's card (includes public IP)</span>
+<span class="k">const</span> bobCard = bob.<span class="f">getAgentCard</span>();
+console.<span class="f">log</span>(<span class="s">'Bob\'s Agent Card:'</span>, bobCard);
+console.<span class="f">log</span>(<span class="s">'Share this link:'</span>, <span class="f">toLink</span>(bobCard));
+
+<span class="c">// Bob receives and handles messages</span>
+<span class="c">// ... (see Messaging section)</span>
+
+
+<span class="c">// ============================================</span>
+<span class="c">// ALICE - Runs on laptop behind NAT</span>
+<span class="c">// ============================================</span>
+
+<span class="k">const</span> alice = <span class="k">new</span> <span class="f">AgentLinkNode</span>({
+  name: <span class="s">'Alice (Laptop)'</span>,
+  listenPort: <span class="n">9100</span>
+});
+
+<span class="k">await</span> alice.<span class="f">start</span>();
+
+<span class="c">// Alice received Bob's link via email/chat</span>
+<span class="k">const</span> bobCard = <span class="f">fromLink</span>(<span class="s">'agentlink://eyJkaWQiOiJkaWQ6a2V5...'</span>);
+
+<span class="c">// Add Bob as trusted contact</span>
+<span class="k">await</span> alice.<span class="f">getContactBook</span>().<span class="f">add</span>({
+  did: bobCard.did,
+  name: bobCard.name,
+  trustLevel: <span class="s">'friend'</span>,
+  agentCard: bobCard,
+  multiaddrs: [bobCard.endpoints.agentlink]
+});
+
+<span class="c">// Send a message to Bob</span>
+<span class="k">const</span> identity = alice.<span class="f">getIdentity</span>();
+<span class="k">const</span> message = <span class="k">await</span> <span class="f">createEnvelope</span>({
+  from: identity.did,
+  to: bobCard.did,
+  type: <span class="s">'ping'</span>,
+  body: { message: <span class="s">'Hello from Alice!'</span> }
+}, identity.privateKey);
+
+console.<span class="f">log</span>(<span class="s">'Message sent!'</span>, message.id);</pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 Tip for NAT Traversal</div>
+                    <p>If both agents are behind NAT, consider using a relay server or having at least one agent on a VPS with a public IP. Future versions of AgentLink will include automatic NAT traversal using techniques like hole punching.</p>
+                </div>
+            </section>
+
+            <!-- API Reference -->
+            <section class="docs-section" id="api">
+            </section>
+
+            <!-- API Reference -->
+            <section class="docs-section" id="api">
+            </section>
+
+            <!-- API Reference -->
+            <section class="docs-section" id="api">
+                <h2 class="section-heading">API Reference</h2>
+
+                <h3 class="section-subheading" id="api-node">AgentLinkNode</h3>
+                
+                <p class="section-text">The main class for creating and managing an agent node.</p>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">class</span> <span class="name">AgentLinkNode</span> {
+                            <span class="f">constructor</span>(<span class="param">config</span>: <span class="type">AgentLinkConfig</span>)
+                        }
+                    </div>
+                    <div class="api-body">
+                        <p>Creates a new AgentLink node with the specified configuration.</p>
+                        <div class="api-params">
+                            <div class="api-param">
+                                <span class="api-param-name">name</span>
+                                <span class="api-param-desc">Agent name (required)</span>
+                            </div>
+                            <div class="api-param">
+                                <span class="api-param-name">description</span>
+                                <span class="api-param-desc">Agent description</span>
+                            </div>
+                            <div class="api-param">
+                                <span class="api-param-name">capabilities</span>
+                                <span class="api-param-desc">Array of capability strings</span>
+                            </div>
+                            <div class="api-param">
+                                <span class="api-param-name">listenPort</span>
+                                <span class="api-param-desc">Port for P2P listener (default: 9100)</span>
+                            </div>
+                            <div class="api-param">
+                                <span class="api-param-name">dataDir</span>
+                                <span class="api-param-desc">Directory for storing identity and data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">async</span> <span class="f">start</span>(): <span class="type">Promise&lt;void&gt;</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Starts the P2P node and initializes the agent. Must be called before any other operations.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">async</span> <span class="f">stop</span>(): <span class="type">Promise&lt;void&gt;</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Stops the P2P node gracefully.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">getIdentity</span>(): <span class="type">IdentityKeyPair | null</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Returns the agent's identity keypair including DID and keys.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">getAgentCard</span>(): <span class="type">AgentCard | null</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Returns the agent's shareable Agent Card.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">getContactBook</span>(): <span class="type">ContactBook</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Returns the contact book for managing trusted agents.</p>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading" id="api-identity">Identity Functions</h3>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">async function</span> <span class="f">generateKeyPair</span>(<span class="param">options?</span>: <span class="type">GenerateKeyPairOptions</span>): <span class="type">Promise&lt;IdentityKeyPair&gt;</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Generates a new Ed25519 keypair with DID did:key.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">async function</span> <span class="f">saveIdentitySecure</span>(<span class="param">keyPair</span>: <span class="type">IdentityKeyPair</span>, <span class="param">password</span>: <span class="type">string</span>): <span class="type">Promise&lt;void&gt;</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Saves identity encrypted with AES-256-GCM.</p>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading" id="api-envelope">Envelope Functions</h3>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">async function</span> <span class="f">createEnvelope</span>(<span class="param">options</span>: <span class="type">CreateMessageOptions</span>, <span class="param">privateKey</span>: <span class="type">Uint8Array</span>): <span class="type">Promise&lt;Envelope&gt;</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Creates a signed message envelope.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="k">function</span> <span class="f">parseMessage</span>(<span class="param">raw</span>: <span class="type">string</span>): <span class="type">ParsedMessage</span>
+                    </div>
+                    <div class="api-body">
+                        <p>Parses and verifies a raw message string.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CLI -->
+            <section class="docs-section" id="cli">
+                <h2 class="section-heading">CLI Reference</h2>
+
+                <p class="section-text">The AgentLink CLI provides quick setup and management tools.</p>
+
+                <h3 class="section-subheading">Installation</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">bash</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="c"># Run directly with npx</span>
+npx @dolutech/agent-link-cli init
+
+<span class="c"># Or install globally</span>
+npm install -g @dolutech/agent-link-cli
+npx @dolutech/agent-link-cli init</pre>
+                    </div>
+                </div>
+
+                <h3 class="section-subheading">Commands</h3>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">init</span> [options]
+                    </div>
+                    <div class="api-body">
+                        <p>Initialize a new agent with cryptographic identity.</p>
+                        <div class="api-params">
+                            <div class="api-param">
+                                <span class="api-param-name">--name</span>
+                                <span class="api-param-desc">Agent name</span>
+                            </div>
+                            <div class="api-param">
+                                <span class="api-param-name">--port</span>
+                                <span class="api-param-desc">Listening port (default: 9100)</span>
+                            </div>
+                            <div class="api-param">
+                                <span class="api-param-name">--secure</span>
+                                <span class="api-param-desc">Enable encrypted storage (default: true)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">start</span> [options]
+                    </div>
+                    <div class="api-body">
+                        <p>Start the agent node.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">status</span> [options]
+                    </div>
+                    <div class="api-body">
+                        <p>Show agent status and connection info.</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">contacts</span> [action] [options]
+                    </div>
+                    <div class="api-body">
+                        <p>Manage contacts (list, add, remove, trust).</p>
+                    </div>
+                </div>
+
+                <div class="api-item">
+                    <div class="api-signature">
+                        <span class="f">card</span> [options]
+                    </div>
+                    <div class="api-body">
+                        <p>Show or export agent card.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OpenClaw Tools -->
+            <section class="docs-section" id="openclaw-tools">
+                <h2 class="section-heading">OpenClaw Integration</h2>
+
+                <p class="section-text">AgentLink provides ready-to-use tools for OpenClaw agents:</p>
+
+                <h3 class="section-subheading">Available Tools</h3>
+
+                <table class="docs-table">
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>agentlink_send_message</code></td>
+                            <td>Send a message to another agent</td>
+                        </tr>
+                        <tr>
+                            <td><code>agentlink_add_contact</code></td>
+                            <td>Add a new contact from Agent Card</td>
+                        </tr>
+                        <tr>
+                            <td><code>agentlink_get_card</code></td>
+                            <td>Get your Agent Card for sharing</td>
+                        </tr>
+                        <tr>
+                            <td><code>agentlink_list_contacts</code></td>
+                            <td>List all contacts and their trust levels</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="section-subheading">Using in OpenClaw</h3>
+                <div class="code-block">
+                    <div class="code-header">
+                        <span class="code-lang">typescript</span>
+                        <button class="code-copy" onclick="copyCode(this)">Copy</button>
+                    </div>
+                    <div class="code-body">
+<pre><span class="k">import</span> { OpenClawBridge, createTools } <span class="k">from</span> <span class="s">'@dolutech/agent-link'</span>;
+
+<span class="c">// Create bridge for OpenClaw</span>
+<span class="k">const</span> bridge = <span class="k">new</span> <span class="f">OpenClawBridge</span>(agent);
+
+<span class="c">// Get tools to register with OpenClaw</span>
+<span class="k">const</span> tools = bridge.<span class="f">getTools</span>();
+
+<span class="c">// Register with your OpenClaw instance</span>
+openclaw.<span class="f">registerTools</span>(tools);</pre>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">💡 For AI Agents Reading This</div>
+                    <p>AgentLink is designed to be self-documenting. The TypeScript types and Zod schemas provide complete information about all data structures. Use your IDE's IntelliSense or consult the type definitions for detailed information.</p>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer style="margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border);">
+                <p style="color: var(--muted); font-size: 0.9rem;">
+                    © 2026 AgentLink Protocol — 
+                    <a href="https://github.com/dolutech/agent-link" style="color: var(--accent); text-decoration: none;">GitHub</a> — 
+                    <a href="index.html" style="color: var(--accent); text-decoration: none;">Home</a>
+                </p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Mobile sidebar toggle
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebar').classList.toggle('active');
+        }
+
+        // Copy code functionality
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('pre').textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Active sidebar link
+        const sections = document.querySelectorAll('.docs-section');
+        const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+        function updateActiveLink() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveLink);
+        updateActiveLink();
+    </script>
+</body>
+</html>
