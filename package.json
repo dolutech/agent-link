@@ -41,7 +41,7 @@
     "@libp2p/identify": "^4.0.12",
     "@libp2p/kad-dht": "^16.1.5",
     "@libp2p/mdns": "^12.0.13",
-    "@libp2p/noise": "^12.0.1",
+    "@libp2p/noise": "^17.0.4",
     "@libp2p/peer-id": "^6.0.4",
     "@libp2p/ping": "^3.0.12",
     "@libp2p/tcp": "^11.0.12",
